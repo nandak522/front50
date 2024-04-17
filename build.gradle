@@ -79,7 +79,7 @@ subprojects { project ->
       resolutionStrategy.force 'com.google.apis:google-api-services-storage:v1-rev20200326-1.30.9'
       resolutionStrategy.force 'com.google.auth:google-auth-library-oauth2-http:0.20.0'
       // TODO(plumpy): remove version once added to kork
-      resolutionStrategy.force 'com.google.cloud:google-cloud-storage:1.108.0'
+      resolutionStrategy.force 'com.google.cloud:google-cloud-storage:2.36.1'
     }
   }
 }
