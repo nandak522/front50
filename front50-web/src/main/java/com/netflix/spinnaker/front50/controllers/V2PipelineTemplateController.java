@@ -188,6 +188,7 @@ public class V2PipelineTemplateController {
     List<String> dependentConfigIds = new ArrayList<>();
 
     String prefixedId = SPINNAKER_PREFIX + templateId;
+    log.info("entering getDependentConfigs templateId:", templateId);
 
     pipelineDAO.all().stream()
         .filter(pipeline -> pipeline.getType() != null && pipeline.getType().equals(TYPE_TEMPLATED))
