@@ -42,6 +42,7 @@ subprojects { project ->
     test {
       testLogging {
         exceptionFormat = 'full'
+        events "passed", "skipped", "failed"
       }
       useJUnitPlatform()
     }

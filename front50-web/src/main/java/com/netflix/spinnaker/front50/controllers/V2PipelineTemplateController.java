@@ -69,7 +69,8 @@ public class V2PipelineTemplateController {
 
   @Autowired ObjectMapper objectMapper;
 
-  // TODO(louisjimenez): Deprecated. Will be replaced with /versions endpoint starting with 1.19.
+  // TODO(louisjimenez): Deprecated. Will be replaced with /versions endpoint
+  // starting with 1.19.
   @RequestMapping(value = "", method = RequestMethod.GET)
   List<PipelineTemplate> list(
       @RequestParam(required = false, value = "scopes") List<String> scopes) {
@@ -106,7 +107,8 @@ public class V2PipelineTemplateController {
     boolean nonEmptyTag = StringUtils.isNotEmpty(tag);
     if (nonEmptyTag) {
       templateId = String.format("%s:%s", pipelineTemplate.undecoratedId(), tag);
-      // NOTE: We need to store the tag in the template blob to resolve the proper id later.
+      // NOTE: We need to store the tag in the template blob to resolve the proper id
+      // later.
       pipelineTemplate.setTag(tag);
     } else {
       templateId = pipelineTemplate.undecoratedId();
@@ -166,7 +168,8 @@ public class V2PipelineTemplateController {
       @RequestParam(value = "tag", required = false) String tag,
       @RequestParam(value = "digest", required = false) String digest) {
     String templateId = formatId(id, tag, digest);
-    // TODO(jacobkiefer): Refactor dependent config checking once we replace templateSource with
+    // TODO(jacobkiefer): Refactor dependent config checking once we replace
+    // templateSource with
     // Artifact(s).
     checkForDependentConfigs(templateId);
     getPipelineTemplateDAO().delete(templateId);
@@ -195,9 +198,13 @@ public class V2PipelineTemplateController {
 
                 V2TemplateConfiguration config =
                     objectMapper.convertValue(templatedPipeline, V2TemplateConfiguration.class);
+                log.info("config:", config.toString());
                 source = config.getTemplate().getReference();
+                log.info("source:", source.toString());
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(
+                    "Exception occurred while retrieving the templated pipeline's reference : {} ",
+                    e);
                 return;
               }
 
