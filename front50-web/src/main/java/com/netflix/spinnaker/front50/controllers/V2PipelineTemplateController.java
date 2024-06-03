@@ -188,15 +188,20 @@ public class V2PipelineTemplateController {
     List<String> dependentConfigIds = new ArrayList<>();
 
     String prefixedId = SPINNAKER_PREFIX + templateId;
+    log.info("entering getDependentConfigs log:", log);
+    log.info("entering getDependentConfigs pipelineDAO:", pipelineDAO);
     log.info("entering getDependentConfigs templateId:", templateId);
 
     pipelineDAO.all().stream()
         .filter(pipeline -> pipeline.getType() != null && pipeline.getType().equals(TYPE_TEMPLATED))
         .forEach(
             templatedPipeline -> {
+              log.info(
+                  "entering getDependentConfigs templatedPipeline:", templatedPipeline.toString());
               String source;
               try {
 
+                log.info("templatedPipeline.getId:", templatedPipeline.getId());
                 V2TemplateConfiguration config =
                     objectMapper.convertValue(templatedPipeline, V2TemplateConfiguration.class);
                 log.info("config:", config.toString());
