@@ -196,6 +196,9 @@ public class V2PipelineTemplateController {
         .filter(pipeline -> pipeline.getType() != null && pipeline.getType().equals(TYPE_TEMPLATED))
         .forEach(
             templatedPipeline -> {
+              System.out.println(
+                  "sop entering getDependentConfigs templatedPipeline:"
+                      + templatedPipeline.toString());
               log.info(
                   "entering getDependentConfigs templatedPipeline:", templatedPipeline.toString());
               String source;
