@@ -177,6 +177,7 @@ public class V2PipelineTemplateController {
 
   @RequestMapping(value = "{id}/dependentPipelines", method = RequestMethod.GET)
   List<Pipeline> listDependentPipelines(@PathVariable String id) {
+    System.out.println("entering listDependentPipelines id:" + id);
     List<String> dependentConfigsIds = getDependentConfigs(id);
     return pipelineDAO.all().stream()
         .filter(pipeline -> dependentConfigsIds.contains(pipeline.getId()))
@@ -188,32 +189,29 @@ public class V2PipelineTemplateController {
     List<String> dependentConfigIds = new ArrayList<>();
 
     String prefixedId = SPINNAKER_PREFIX + templateId;
-    log.info("entering getDependentConfigs log:", log);
-    log.info("entering getDependentConfigs pipelineDAO:", pipelineDAO);
-    log.info("entering getDependentConfigs templateId:", templateId);
+    System.out.println("entering getDependentConfigs log:" + log);
+    System.out.println("entering getDependentConfigs pipelineDAO:" + pipelineDAO);
+    System.out.println("entering getDependentConfigs templateId:" + templateId);
 
     pipelineDAO.all().stream()
         .filter(pipeline -> pipeline.getType() != null && pipeline.getType().equals(TYPE_TEMPLATED))
         .forEach(
             templatedPipeline -> {
-              System.out.println(
-                  "sop entering getDependentConfigs templatedPipeline:"
-                      + templatedPipeline.toString());
-              log.info(
-                  "entering getDependentConfigs templatedPipeline:", templatedPipeline.toString());
               String source;
+              System.out.println(
+                  "entering getDependentConfigs templatedPipeline:" + templatedPipeline.toString());
               try {
 
-                log.info("templatedPipeline.getId:", templatedPipeline.getId());
+                System.out.println("templatedPipeline.getId:" + templatedPipeline.getId());
                 V2TemplateConfiguration config =
                     objectMapper.convertValue(templatedPipeline, V2TemplateConfiguration.class);
-                log.info("config:", config.toString());
                 source = config.getTemplate().getReference();
-                log.info("source:", source.toString());
+                System.out.println("config:" + config.toString());
+                System.out.println("source:" + source.toString());
               } catch (Exception e) {
-                log.error(
-                    "Exception occurred while retrieving the templated pipeline's reference : {} ",
-                    e);
+                System.out.println(
+                    "Exception occurred while retrieving the templated pipeline's reference : {} "
+                        + e);
                 return;
               }
 
